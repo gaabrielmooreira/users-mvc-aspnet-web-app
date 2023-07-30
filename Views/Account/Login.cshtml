@@ -1,0 +1,31 @@
+﻿@using Usuarios.Data.ViewModels;
+@model LoginVM;
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<div class="d-flex flex-column align-items-center">
+    <h1 class="display-4">Login</h1>
+    @if (TempData["Error"] != null)
+    {
+        <div class="col-md-12 alert alert-danger">
+            <span><b>Desculpe!</b> - @TempData["Error"] </span>
+        </div>
+    }
+    <form asp-action="Login" method="post" class="w-50">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Login" class="form-label">Usuário</label>
+            <input asp-for="Login" type="text" class="form-control">
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Senha" class="form-label">Senha</label>
+            <input asp-for="Senha" type="password" class="form-control">
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+        <button type="submit" value="Login" class="btn btn-primary w-100">Entrar</button>
+    </form>
+</div>

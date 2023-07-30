@@ -1,0 +1,74 @@
+﻿﻿@using Usuarios.Data.ViewModels;
+@model HomeVM;
+
+@{
+    ViewData["Title"] = "Consultar Usuário";
+}
+
+<div class="text-center">
+    <h1 class="display-4 mb-5">Consultar Usuario</h1>
+
+    @if (Model.SessaoUsuario.Codigo != 0)
+    {   
+        <h2 class="display-6 mb-2">Usuario Logado</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Login</th>
+                    <th scope="col">Cpf</th>
+                    <th scope="col">Último Acesso</th>
+                    <th scope="col">QtdErroLogin</th>
+                    <th scope="col">BlAtivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <th scope="row">@Model.SessaoUsuario.Codigo</th>
+                        <td>@Model.SessaoUsuario.Nome</td>
+                        <td>@Model.SessaoUsuario.Login</td>
+                        <td>@Model.SessaoUsuario.Cpf</td>
+                        <td>@Model.SessaoUsuario.UltimoAcesso</td>
+                        <td>@Model.SessaoUsuario.QtdErroLogin</td>
+                        <td>@Model.SessaoUsuario.BlAtivo</td>
+                    </tr>
+            </tbody>
+        </table>
+        <div class="mb-5">
+            <a asp-area="" asp-controller="Account" asp-action="Logoff">
+                <button class="btn btn-danger">Sair da Sessão</button>
+            </a>
+        </div>
+    }
+    <h2 class="display-6 mb-2">Todos os Usuarios</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Login</th>
+                <th scope="col">Cpf</th>
+                <th scope="col">Último Acesso</th>
+                <th scope="col">QtdErroLogin</th>
+                <th scope="col">BlAtivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model.Usuarios)
+            {
+                <tr>
+                    <th scope="row">@usuario.Codigo</th>
+                    <td>@usuario.Nome</td>
+                    <td>@usuario.Login</td>
+                    <td>@usuario.Cpf</td>
+                    <td>@usuario.UltimoAcesso</td>
+                    <td>@usuario.QtdErroLogin</td>
+                    <td>@usuario.BlAtivo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
