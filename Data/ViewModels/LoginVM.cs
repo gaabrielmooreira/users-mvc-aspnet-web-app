@@ -6,9 +6,9 @@ namespace Usuarios.Data.ViewModels
     {
         [Required]
         [StringLength(20)]
-        public string Login { get; set; }
+        public string? Login { get; set; }
         [Required]
         [StringLength(20, MinimumLength = 6)]
-        public string Senha { get; set; }
+        public string? Senha { get; set; }
     }
 }

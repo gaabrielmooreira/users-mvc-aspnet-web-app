@@ -16,14 +16,13 @@ namespace Usuarios.Controllers
             _context = context;
         }
 
-
         public IActionResult Login()
         {
             return View(new LoginVM());
         }
 
         [HttpPost]
-        public IActionResult Login(LoginVM loginVM)
+        public async Task<IActionResult> Login(LoginVM loginVM)
         {
             if (!ModelState.IsValid) return View(loginVM);
 
@@ -31,14 +30,16 @@ namespace Usuarios.Controllers
                 .Where(u => u.Login == loginVM.Login)
                 .FirstOrDefault();
 
+            if (user == null)
+            {
+                TempData["Error"] = "Login e/ou senha incorretos.";
+                return View(loginVM);
+            };
+
             if (user.BlAtivo) {
                 TempData["Error"] = "Usuario foi bloqueado, após 3 tentativas incorretas.";
                 return View(loginVM);
             }
-            if (user == null) {
-                TempData["Error"] = "Login e/ou senha incorretos.";
-                return View(loginVM);
-            };
 
             if(loginVM.Senha != user.Senha)
             {
@@ -52,7 +53,7 @@ namespace Usuarios.Controllers
 
             user.UltimoAcesso = DateTime.Now;
             user.QtdErroLogin = 0;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             UsuarioVMDTO SessaoUsuario = new UsuarioVMDTO
             {
                 Codigo = user.Codigo,
@@ -74,7 +75,7 @@ namespace Usuarios.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterVM registerVM)
+        public async Task<IActionResult> Register(RegisterVM registerVM)
         {
            if (!ModelState.IsValid) return View(registerVM);
 
@@ -97,13 +98,14 @@ namespace Usuarios.Controllers
             };
             
             _context.Usuarios.Add(newUser);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Usuario cadastrado com sucesso.";
             
             return RedirectToAction("Register");
         }
 
+        [HttpPost]
         public IActionResult Logoff()
         {
             UsuarioVMDTO SessaoUsuarioNulo = new UsuarioVMDTO
