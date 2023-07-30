@@ -8,7 +8,7 @@ namespace Usuarios.Data.ViewModels
 {
     public class HomeVM
     {
-        public UsuarioVMDTO SessaoUsuario { get; set; }
-        public List<UsuarioVMDTO> Usuarios;
+        public UsuarioVMDTO? SessaoUsuario { get; set; }
+        public List<UsuarioVMDTO>? Usuarios;
     }
 }
