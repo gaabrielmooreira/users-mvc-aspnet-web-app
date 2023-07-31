@@ -11,6 +11,7 @@ namespace Usuarios.Data.ViewModels
         public string Nome { get; set; } = null!;
 
         [Required(ErrorMessage = "O login é obrigatório.")]
+        [StringLength(20)]
         public string Login { get; set; } = null!;
 
         [Required(ErrorMessage = "O cpf é obrigatório.")]
