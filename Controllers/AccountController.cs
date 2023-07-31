@@ -53,6 +53,7 @@ namespace Usuarios.Controllers
 
             user.UltimoAcesso = DateTime.Now;
             user.QtdErroLogin = 0;
+            _context.Usuarios.Update(user);
             await _context.SaveChangesAsync();
             UsuarioVMDTO SessaoUsuario = new UsuarioVMDTO
             {
@@ -105,7 +106,6 @@ namespace Usuarios.Controllers
             return RedirectToAction("Register");
         }
 
-        [HttpPost]
         public IActionResult Logoff()
         {
             UsuarioVMDTO SessaoUsuarioNulo = new UsuarioVMDTO
